@@ -1,10 +1,239 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Registration | PRIME</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid transparent;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .12)
+        }
+        
+        input[type=file]::file-selector-button {
+            margin-right: .7rem;
+            border: 0;
+            border-radius: .5rem;
+            background: #eff6ff;
+            padding: .55rem .7rem;
+            color: #1d4ed8;
+            font-weight: 600;
+            cursor: pointer
+        }
+    </style>
 </head>
-<body>
-    <h1>Hello World</h1>
+
+<body class="min-h-screen bg-slate-100 px-3 py-6 sm:px-6">
+    <main class="mx-auto max-w-3xl overflow-hidden rounded-2xl bg-white shadow-lg">
+        <header class="bg-blue-900 px-5 py-7 text-center text-white sm:px-8">
+            <div class="text-3xl">🎓</div>
+            <h1 class="mt-2 text-2xl font-bold">Student Registration</h1>
+            <p class="mt-2 text-sm text-blue-100">Complete the form and upload the required documents.</p>
+        </header>
+        <div class="p-4 sm:p-8">
+            <div class="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+                Please check your details before submitting. Your documents will be stored privately for authorized college staff.
+            </div>
+            <form id="registrationForm" class="space-y-7">
+                <section>
+                    <h2 class="mb-4 border-b pb-2 text-lg font-bold">1. Personal Details</h2>
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div><label for="firstName" class="mb-1 block text-sm font-semibold">First Name *</label><input id="firstName" name="firstName" required maxlength="80" autocomplete="given-name" class="w-full rounded-lg border border-slate-300 px-3 py-3"
+                                placeholder="First name"></div>
+                        <div><label for="lastName" class="mb-1 block text-sm font-semibold">Last Name *</label><input id="lastName" name="lastName" required maxlength="80" autocomplete="family-name" class="w-full rounded-lg border border-slate-300 px-3 py-3"
+                                placeholder="Last name"></div>
+                        <div><label for="email" class="mb-1 block text-sm font-semibold">Email Address *</label><input id="email" name="email" type="email" required maxlength="150" autocomplete="email" class="w-full rounded-lg border border-slate-300 px-3 py-3"
+                                placeholder="student@example.com"></div>
+                        <div><label for="mobile" class="mb-1 block text-sm font-semibold">Mobile Number *</label><input id="mobile" name="mobile" type="tel" inputmode="numeric" pattern="[0-9]{10}" maxlength="10" required class="w-full rounded-lg border border-slate-300 px-3 py-3"
+                                placeholder="10-digit number"></div>
+                        <div><label for="dob" class="mb-1 block text-sm font-semibold">Date of Birth</label><input id="dob" name="dob" type="date" class="w-full rounded-lg border border-slate-300 px-3 py-3"></div>
+                        <div class="sm:col-span-2"><label for="address" class="mb-1 block text-sm font-semibold">Address</label><textarea id="address" name="address" rows="2" maxlength="500" class="w-full rounded-lg border border-slate-300 px-3 py-3" placeholder="Full address"></textarea></div>
+                    </div>
+                </section>
+                <section>
+                    <h2 class="mb-4 border-b pb-2 text-lg font-bold">2. Course Details</h2>
+                    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div><label for="course" class="mb-1 block text-sm font-semibold">Course *</label><select id="course" name="course" required class="w-full rounded-lg border border-slate-300 bg-white px-3 py-3">
+                <option value="">Select course</option>
+                <option>BCA</option>
+                <option>BBA</option>
+                <option>MCA</option>
+                <option>Other</option>
+              </select></div>
+                        <div><label for="semester" class="mb-1 block text-sm font-semibold">Semester *</label><select id="semester" name="semester" required class="w-full rounded-lg border border-slate-300 bg-white px-3 py-3">
+                <option value="">Select semester</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+              </select></div>
+                    </div>
+                </section>
+                <section>
+                    <h2 class="mb-2 border-b pb-2 text-lg font-bold">3. Documents</h2>
+                    <p class="mb-4 text-sm text-slate-500">PDF, JPG, JPEG or PNG. Maximum 5 MB per file.</p>
+                    <div class="space-y-4">
+                        <div><label for="photo" class="mb-1 block text-sm font-semibold">Student Photograph *</label><input id="photo" name="photo" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" required class="block w-full rounded-lg border border-slate-300 text-sm">
+                            <p id="photoInfo" class="mt-1 text-xs text-slate-500">No file selected</p>
+                        </div>
+                        <div><label for="aadhaar" class="mb-1 block text-sm font-semibold">Aadhaar Card *</label><input id="aadhaar" name="aadhaar" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required class="block w-full rounded-lg border border-slate-300 text-sm">
+                            <p id="aadhaarInfo" class="mt-1 text-xs text-slate-500">No file selected</p>
+                        </div>
+                        <div><label for="marksheet" class="mb-1 block text-sm font-semibold">Previous Exam Marksheet *</label><input id="marksheet" name="marksheet" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" required class="block w-full rounded-lg border border-slate-300 text-sm">
+                            <p id="marksheetInfo" class="mt-1 text-xs text-slate-500">No file selected</p>
+                        </div>
+                        <div><label for="lc" class="mb-1 block text-sm font-semibold">School Leaving Certificate
+                (Optional)</label><input id="lc" name="lc" type="file" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" class="block w-full rounded-lg border border-slate-300 text-sm">
+                            <p id="lcInfo" class="mt-1 text-xs text-slate-500">Optional · No file selected</p>
+                        </div>
+                    </div>
+                </section>
+                <div class="flex items-start gap-3"><input id="agree" name="agree" type="checkbox" required class="mt-1 h-4 w-4"><label for="agree" class="text-sm text-slate-600">I confirm that the details and
+            documents submitted are correct, and I understand they will be used for college registration.</label></div>
+                <div id="status" role="status" aria-live="polite" class="hidden rounded-lg p-3 text-sm"></div>
+                <button id="submitBtn" type="submit" class="w-full rounded-lg bg-blue-700 px-5 py-3.5 font-bold text-white hover:bg-blue-800 disabled:opacity-60">Submit
+          Registration</button>
+                <p class="text-center text-xs text-slate-500">Do not submit someone else's documents. Contact the college if you need help.</p>
+            </form>
+        </div>
+    </main>
+    <script>
+        /*
+                              SETUP: replace these two placeholders with your Supabase Project URL and
+                              Supabase publishable/anon key. These are public client values; NEVER put
+                              the service_role/secret key in this file.
+                            */
+        const SUPABASE_URL = "https://waenoidzrzeusfxpgmvc.supabase.co/rest/v1/";
+        const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY";
+        const FUNCTION_URL = `${SUPABASE_URL}/functions/v1/register-student`;
+        const MAX_SIZE = 5 * 1024 * 1024;
+        const allowed = new Set(["pdf", "jpg", "jpeg", "png"]);
+        const fields = [{
+            id: "photo",
+            key: "photo",
+            required: true,
+            imageOnly: true
+        }, {
+            id: "aadhaar",
+            key: "aadhaar",
+            required: true
+        }, {
+            id: "marksheet",
+            key: "marksheet",
+            required: true
+        }, {
+            id: "lc",
+            key: "leaving_certificate",
+            required: false
+        }];
+        const form = document.getElementById("registrationForm");
+        const statusBox = document.getElementById("status");
+        const submitBtn = document.getElementById("submitBtn");
+
+        function showMessage(message, type) {
+            const cls = {
+                success: "block rounded-lg bg-green-50 p-3 text-sm text-green-800",
+                error: "block rounded-lg bg-red-50 p-3 text-sm text-red-800",
+                info: "block rounded-lg bg-blue-50 p-3 text-sm text-blue-800"
+            };
+            statusBox.className = cls[type] || cls.info;
+            statusBox.textContent = message;
+        }
+
+        function fileExtension(file) {
+            return file.name.includes(".") ? file.name.split(".").pop().toLowerCase() : "";
+        }
+
+        function validateFile(input, imageOnly = false) {
+            const file = input.files[0];
+            if (!file) return null;
+            const ext = fileExtension(file);
+            if (!allowed.has(ext)) throw new Error("Only PDF, JPG, JPEG and PNG files are allowed.");
+            if (imageOnly && !["jpg", "jpeg", "png"].includes(ext)) throw new Error("The photograph must be JPG, JPEG or PNG.");
+            if (file.size <= 0 || file.size > MAX_SIZE) throw new Error("Each file must be larger than 0 bytes and no more than 5 MB.");
+            return file;
+        }
+        fields.forEach(({
+            id,
+            imageOnly
+        }) => {
+            document.getElementById(id).addEventListener("change", e => {
+                const info = document.getElementById(id + "Info");
+                try {
+                    const f = validateFile(e.target, imageOnly);
+                    info.textContent = f ? `${f.name} · ${(f.size / 1048576).toFixed(2)} MB` : (id === "lc" ? "Optional · No file selected" : "No file selected");
+                    info.className = "mt-1 text-xs text-slate-500";
+                } catch (err) {
+                    e.target.value = "";
+                    info.textContent = "Invalid file. Choose another.";
+                    info.className = "mt-1 text-xs text-red-600";
+                    showMessage(err.message, "error");
+                }
+            });
+        });
+        form.addEventListener("submit", async event => {
+            event.preventDefault();
+            if (!form.reportValidity()) return;
+            if (SUPABASE_URL.startsWith("YOUR_") || SUPABASE_ANON_KEY.startsWith("YOUR_")) {
+                showMessage("Website setup is not finished yet. Add the Supabase project URL and publishable key first.", "error");
+                return;
+            }
+            const fd = new FormData();
+            ["firstName", "lastName", "email", "mobile", "dob", "address", "course", "semester"].forEach(id => fd.append(id, document.getElementById(id).value.trim()));
+            try {
+                for (const field of fields) {
+                    const input = document.getElementById(field.id);
+                    const file = validateFile(input, field.imageOnly);
+                    if (field.required && !file) throw new Error("Please select " + field.id + ".");
+                    if (file) fd.append(field.key, file, file.name);
+                }
+            } catch (err) {
+                showMessage(err.message, "error");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Submitting…";
+            showMessage("Uploading your registration and documents. Please keep this page open.", "info");
+            try {
+                const response = await fetch(FUNCTION_URL, {
+                    method: "POST",
+                    headers: {
+                        "apikey": SUPABASE_ANON_KEY,
+                        "Authorization": "Bearer " + SUPABASE_ANON_KEY
+                    },
+                    body: fd
+                });
+                const result = await response.json().catch(() => ({}));
+                if (!response.ok) throw new Error(result.error || "Submission failed. Please try again or contact the college.");
+                form.reset();
+                fields.forEach(({
+                    id
+                }) => {
+                    const p = document.getElementById(id + "Info");
+                    p.textContent = id === "lc" ? "Optional · No file selected" : "No file selected";
+                    p.className = "mt-1 text-xs text-slate-500";
+                });
+                showMessage("Registration submitted successfully. Your reference number is " + result.reference + ". Please save this number.", "success");
+            } catch (err) {
+                showMessage(err.message || "Could not submit. Check your internet connection and try again.", "error");
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "Submit Registration";
+            }
+        });
+    </script>
 </body>
+
 </html>
